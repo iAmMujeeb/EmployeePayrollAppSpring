@@ -2,39 +2,56 @@ package com.example.employeepayrollapp.service;
 
 import com.example.employeepayrollapp.dto.EmployeePayrollDTO;
 import com.example.employeepayrollapp.model.EmployeePayrollData;
+import com.example.employeepayrollapp.repository.EmployeePayrollRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeePayrollServiceImp implements EmployeePayrollService {
 
+    @Autowired
+    private EmployeePayrollRepository employeePayrollRepository;
+    private List<EmployeePayrollData> employeePayrollDataList = new ArrayList<>();
 
-    public List<EmployeePayrollData> getEmployeePayrollData() {
-        List<EmployeePayrollData> employeePayrollDataList = new ArrayList<>();
-        employeePayrollDataList.add(new EmployeePayrollData(1, new EmployeePayrollDTO("Pankaj", 30000)));
-        return employeePayrollDataList;
-    }
-
-    public EmployeePayrollData getEmployeePayrollDataById(int empId) {
-        EmployeePayrollData employeePayrollData = null;
-        employeePayrollData = new EmployeePayrollData(1, new EmployeePayrollDTO("Pankaj", 30000));
-        return employeePayrollData;
-    }
-
+    @Override
     public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO employeePayrollDTO) {
-        EmployeePayrollData employeePayrollData = null;
-        employeePayrollData = new EmployeePayrollData(1, employeePayrollDTO);
-        return employeePayrollData;
+        EmployeePayrollData employeePayrollData = new EmployeePayrollData(employeePayrollDTO);
+        return employeePayrollRepository.save(employeePayrollData);
     }
 
-    public EmployeePayrollData updateEmployeePayrollData(EmployeePayrollDTO empayrollDTO) {
-        EmployeePayrollData employeePayrollData = null;
-        employeePayrollData = new EmployeePayrollData(1, empayrollDTO);
-        return employeePayrollData;
+    @Override
+    public List<EmployeePayrollData> getEmployeePayrollData() {
+        return employeePayrollRepository.findAll();
     }
 
-    public void deleteEmployeePayrollData(int empId) {
+    @Override
+    public Optional<EmployeePayrollData> getEmployeePayrollDataById(int empId) {
+        return employeePayrollRepository.findById(empId);
     }
+
+    @Override
+    public EmployeePayrollData updateEmployeePayrollData(int empId, EmployeePayrollDTO employeePayrollDTO) {
+        Optional<EmployeePayrollData> employeePayrollData = getEmployeePayrollDataById(empId);
+        if(employeePayrollData.isPresent()){
+            employeePayrollData.get().setEmpName(employeePayrollDTO.empName);
+            employeePayrollData.get().setSalary(employeePayrollDTO.salary);
+            return employeePayrollRepository.save(employeePayrollData.get());
+        }
+        return null;
+    }
+
+    @Override
+    public String deleteEmployeePayrollDataById(int empId) {
+        Optional<EmployeePayrollData> employeePayrollData = getEmployeePayrollDataById(empId);
+        if(employeePayrollData.isPresent()){
+            employeePayrollRepository.deleteById(empId);
+            return "Deleted Successfully!";
+        }
+        return "Failed!";
+    }
+
 }

@@ -4,16 +4,17 @@ import com.example.employeepayrollapp.dto.EmployeePayrollDTO;
 import com.example.employeepayrollapp.model.EmployeePayrollData;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface EmployeePayrollService {
 
     List<EmployeePayrollData> getEmployeePayrollData();
 
-    EmployeePayrollData getEmployeePayrollDataById(int empId);
+    Optional<EmployeePayrollData> getEmployeePayrollDataById(int empId);
 
     EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO employeePayrollDTO);
 
-    EmployeePayrollData updateEmployeePayrollData(EmployeePayrollDTO employeePayrollDTO);
+    EmployeePayrollData updateEmployeePayrollData(int empId, EmployeePayrollDTO employeePayrollDTO);
 
-    void deleteEmployeePayrollDataById(int empId);
+    String deleteEmployeePayrollDataById(int empId);
 }
