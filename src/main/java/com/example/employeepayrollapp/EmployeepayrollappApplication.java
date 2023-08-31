@@ -6,9 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class EmployeepayrollappApplication {
 
-	public static void main(String[] args) {
-		System.out.println("Welcome to Employee Payroll App");
-		SpringApplication.run(EmployeepayrollappApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(EmployeepayrollappApplication.class, args);
+    }
 
 }
