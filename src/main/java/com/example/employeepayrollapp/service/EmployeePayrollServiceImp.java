@@ -1,6 +1,7 @@
 package com.example.employeepayrollapp.service;
 
 import com.example.employeepayrollapp.dto.EmployeePayrollDTO;
+import com.example.employeepayrollapp.exception.EmployeePayrollException;
 import com.example.employeepayrollapp.model.EmployeePayrollData;
 import com.example.employeepayrollapp.repository.EmployeePayrollRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class EmployeePayrollServiceImp implements EmployeePayrollService {
 
     @Override
     public Optional<EmployeePayrollData> getEmployeePayrollDataById(int empId) {
-        return employeePayrollRepository.findById(empId);
+        return Optional.ofNullable(employeePayrollRepository.findById(empId).orElseThrow(() -> new EmployeePayrollException("Employee Not Found")));
     }
 
     @Override
