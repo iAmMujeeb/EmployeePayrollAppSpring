@@ -9,5 +9,6 @@ public class EmployeePayrollDTO {
 
     public String empName;
     public int salary;
+    public int empId;
 
 }

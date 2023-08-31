@@ -5,11 +5,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "emp_payroll")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class EmployeePayrollData {
 
     @Id
@@ -19,6 +23,8 @@ public class EmployeePayrollData {
     private String empName;
     private int salary;
 
-    public EmployeePayrollData(int i, EmployeePayrollDTO pankaj) {
+    public EmployeePayrollData(EmployeePayrollDTO employeePayrollDTO) {
+        this.salary = employeePayrollDTO.salary;
+        this.empName = employeePayrollDTO.empName;
     }
 }
