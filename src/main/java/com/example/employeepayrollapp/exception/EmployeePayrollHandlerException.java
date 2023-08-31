@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class EmployeePayrollHandlerException {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ResponseDTO> handleMethodArgumentNotValid(MethodArgumentNotValidException exception){
+    public ResponseEntity<ResponseDTO> handleMethodArgumentNotValid(MethodArgumentNotValidException exception) {
         List<ObjectError> errorsList = exception.getBindingResult().getAllErrors();
         List<String> errorMessages = errorsList.stream()
                 .map(ObjectError -> ObjectError.getDefaultMessage())
