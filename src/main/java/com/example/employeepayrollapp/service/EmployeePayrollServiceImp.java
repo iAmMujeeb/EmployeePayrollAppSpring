@@ -36,7 +36,7 @@ public class EmployeePayrollServiceImp implements EmployeePayrollService {
     @Override
     public EmployeePayrollData updateEmployeePayrollData(int empId, EmployeePayrollDTO employeePayrollDTO) {
         Optional<EmployeePayrollData> employeePayrollData = getEmployeePayrollDataById(empId);
-        if(employeePayrollData.isPresent()){
+        if (employeePayrollData.isPresent()) {
             employeePayrollData.get().setEmpName(employeePayrollDTO.empName);
             employeePayrollData.get().setSalary(employeePayrollDTO.salary);
             return employeePayrollRepository.save(employeePayrollData.get());
@@ -47,7 +47,7 @@ public class EmployeePayrollServiceImp implements EmployeePayrollService {
     @Override
     public String deleteEmployeePayrollDataById(int empId) {
         Optional<EmployeePayrollData> employeePayrollData = getEmployeePayrollDataById(empId);
-        if(employeePayrollData.isPresent()){
+        if (employeePayrollData.isPresent()) {
             employeePayrollRepository.deleteById(empId);
             return "Deleted Successfully!";
         }

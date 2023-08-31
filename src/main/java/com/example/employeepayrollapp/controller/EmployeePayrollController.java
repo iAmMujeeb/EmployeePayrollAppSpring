@@ -47,7 +47,7 @@ public class EmployeePayrollController {
     @PutMapping("/update/{empId}")
     public ResponseEntity<ResponseDTO> updateEmployeePayrollData(@PathVariable("empId") int empId, @RequestBody EmployeePayrollDTO employeePayrollDTO) {
         EmployeePayrollData employeePayrollData = null;
-        employeePayrollData = employeePayrollService.updateEmployeePayrollData(empId,employeePayrollDTO);
+        employeePayrollData = employeePayrollService.updateEmployeePayrollData(empId, employeePayrollDTO);
         ResponseDTO responseDTO = new ResponseDTO("Updated Employee Payroll Data Successfully", employeePayrollData);
         return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
     }
@@ -55,7 +55,7 @@ public class EmployeePayrollController {
     @DeleteMapping("/delete/{empId}")
     public ResponseEntity<ResponseDTO> deleteEmployeePayrollData(@PathVariable("empId") int empId) {
         employeePayrollService.deleteEmployeePayrollDataById(empId);
-        ResponseDTO responseDTO = new ResponseDTO("Deleted Successfully", "Delete id: "+empId );
+        ResponseDTO responseDTO = new ResponseDTO("Deleted Successfully", "Delete id: " + empId);
         return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
     }
 
