@@ -6,12 +6,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @Slf4j
-public class EmployeepayrollappApplication {
+public class EmployeepayrollApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(EmployeepayrollappApplication.class, args);
-        log.info("Employee Payroll App started in {} Environment",
-                context.getEvironment.getProperty("environment"));
+        SpringApplication.run(EmployeepayrollApplication.class, args);
+        log.info("Welcome to Employee Payroll App");
     }
 
 }

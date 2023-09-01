@@ -16,7 +16,6 @@ public class EmployeePayrollServiceImp implements EmployeePayrollService {
 
     @Autowired
     private EmployeePayrollRepository employeePayrollRepository;
-    private List<EmployeePayrollData> employeePayrollDataList = new ArrayList<>();
 
     @Override
     public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO employeePayrollDTO) {

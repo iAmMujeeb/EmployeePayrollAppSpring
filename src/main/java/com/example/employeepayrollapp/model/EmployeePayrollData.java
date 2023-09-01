@@ -8,6 +8,8 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "emp_payroll")
@@ -21,10 +23,27 @@ public class EmployeePayrollData {
     private int empId;
 
     private String empName;
+
     private int salary;
+
+    private String gender;
+
+    private LocalDate startDate;
+
+    private String note;
+
+    private String profilePic;
+
+    private List<String> departments;
 
     public EmployeePayrollData(EmployeePayrollDTO employeePayrollDTO) {
         this.salary = employeePayrollDTO.salary;
         this.empName = employeePayrollDTO.empName;
+        this.gender = employeePayrollDTO.gender;
+        this.note = employeePayrollDTO.note;
+        this.startDate = employeePayrollDTO.startDate;
+        this.profilePic = employeePayrollDTO.profilePic;
+        this.departments = employeePayrollDTO.departments;
     }
+            
 }

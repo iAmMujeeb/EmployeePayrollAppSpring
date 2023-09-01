@@ -6,6 +6,9 @@ import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 public class EmployeePayrollDTO {
@@ -16,5 +19,15 @@ public class EmployeePayrollDTO {
 
     @Min(value = 500,message = "Minimum salary should be more than 500")
     public int salary;
+
+    public String gender;
+
+    public String note;
+
+    public LocalDate startDate;
+
+    public String profilePic;
+
+    public List<String> departments;
 
 }
