@@ -4,6 +4,7 @@ import com.example.employeepayrollapp.dto.EmployeePayrollDTO;
 import com.example.employeepayrollapp.dto.ResponseDTO;
 import com.example.employeepayrollapp.model.EmployeePayrollData;
 import com.example.employeepayrollapp.service.EmployeePayrollService;
+import com.example.employeepayrollapp.token.JwtToken;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,9 @@ import java.util.Optional;
 public class EmployeePayrollController {
 
     @Autowired
+    private JwtToken jwtToken;
+
+    @Autowired
     private EmployeePayrollService employeePayrollService;
 
     @RequestMapping(value = {"", "/", "/get"})
@@ -27,8 +31,9 @@ public class EmployeePayrollController {
         return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
     }
 
-    @GetMapping("/get/{empId}")
-    public ResponseEntity<ResponseDTO> getEmployeePayrollData(@PathVariable("empId") int empId) {
+    @GetMapping("/get/{token}")
+    public ResponseEntity<ResponseDTO> getEmployeePayrollData(@PathVariable("token") String token) {
+        int empId = jwtToken.decodeToken(token);
         Optional<EmployeePayrollData> employeePayrollData = null;
         employeePayrollData = employeePayrollService.getEmployeePayrollDataById(empId);
         ResponseDTO responseDTO = new ResponseDTO("Get Call for ID Successful", employeePayrollData);
@@ -37,24 +42,34 @@ public class EmployeePayrollController {
 
     @PostMapping("/create")
     public ResponseEntity<ResponseDTO> addEmployeePayrollData(@Valid @RequestBody EmployeePayrollDTO employeePayrollDTO) {
-        EmployeePayrollData employeePayrollData = null;
-        employeePayrollData = employeePayrollService.createEmployeePayrollData(employeePayrollDTO);
-        ResponseDTO responseDTO = new ResponseDTO("Created Employee Payroll Data Successfully", employeePayrollData);
+        String token = null;
+        token = employeePayrollService.createEmployeePayrollData(employeePayrollDTO);
+        ResponseDTO responseDTO = new ResponseDTO("Created Employee Payroll Data Successfully", token);
         return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
     }
 
-    @PutMapping("/update/{empId}")
-    public ResponseEntity<ResponseDTO> updateEmployeePayrollData(@PathVariable("empId") int empId, @RequestBody EmployeePayrollDTO employeePayrollDTO) {
+    @PutMapping("/update/{token}")
+    public ResponseEntity<ResponseDTO> updateEmployeePayrollData(@PathVariable("token") String token, @RequestBody EmployeePayrollDTO employeePayrollDTO) {
+        int empId = jwtToken.decodeToken(token);
         EmployeePayrollData employeePayrollData = null;
         employeePayrollData = employeePayrollService.updateEmployeePayrollData(empId, employeePayrollDTO);
         ResponseDTO responseDTO = new ResponseDTO("Updated Employee Payroll Data Successfully", employeePayrollData);
         return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{empId}")
-    public ResponseEntity<ResponseDTO> deleteEmployeePayrollData(@PathVariable("empId") int empId) {
+    @DeleteMapping("/delete/{token}")
+    public ResponseEntity<ResponseDTO> deleteEmployeePayrollData(@PathVariable("token") String token) {
+        int empId = jwtToken.decodeToken(token);
         employeePayrollService.deleteEmployeePayrollDataById(empId);
         ResponseDTO responseDTO = new ResponseDTO("Deleted Successfully", "Delete id: " + empId);
+        return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/department/{department}")
+    public ResponseEntity<ResponseDTO> getEmployeePayrollDataByDepartment(@PathVariable ("department") String department){
+        List<EmployeePayrollData> employeePayrollDataList = null;
+        employeePayrollDataList = employeePayrollService.getEmployeesByDepartment(department);
+        ResponseDTO responseDTO = new ResponseDTO("Get Call Successful", employeePayrollDataList);
         return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
     }
 
