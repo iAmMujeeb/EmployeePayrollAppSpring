@@ -12,9 +12,11 @@ public interface EmployeePayrollService {
 
     Optional<EmployeePayrollData> getEmployeePayrollDataById(int empId);
 
-    EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO employeePayrollDTO);
+    String createEmployeePayrollData(EmployeePayrollDTO employeePayrollDTO);
 
     EmployeePayrollData updateEmployeePayrollData(int empId, EmployeePayrollDTO employeePayrollDTO);
 
     String deleteEmployeePayrollDataById(int empId);
+
+    List<EmployeePayrollData> getEmployeesByDepartment(String Department);
 }

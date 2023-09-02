@@ -4,10 +4,10 @@ import com.example.employeepayrollapp.dto.EmployeePayrollDTO;
 import com.example.employeepayrollapp.exception.EmployeePayrollException;
 import com.example.employeepayrollapp.model.EmployeePayrollData;
 import com.example.employeepayrollapp.repository.EmployeePayrollRepository;
+import com.example.employeepayrollapp.token.JwtToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,12 +15,16 @@ import java.util.Optional;
 public class EmployeePayrollServiceImp implements EmployeePayrollService {
 
     @Autowired
+    private JwtToken jwtToken;
+
+    @Autowired
     private EmployeePayrollRepository employeePayrollRepository;
 
     @Override
-    public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO employeePayrollDTO) {
+    public String createEmployeePayrollData(EmployeePayrollDTO employeePayrollDTO) {
         EmployeePayrollData employeePayrollData = new EmployeePayrollData(employeePayrollDTO);
-        return employeePayrollRepository.save(employeePayrollData);
+        employeePayrollRepository.save(employeePayrollData);
+        return jwtToken.createToken(employeePayrollData.getEmpId());
     }
 
     @Override
@@ -52,6 +56,11 @@ public class EmployeePayrollServiceImp implements EmployeePayrollService {
             return "Deleted Successfully!";
         }
         return "Failed!";
+    }
+
+    @Override
+    public List<EmployeePayrollData> getEmployeesByDepartment(String department) {
+        return employeePayrollRepository.findEmployeeByDepartment(department);
     }
 
 }
