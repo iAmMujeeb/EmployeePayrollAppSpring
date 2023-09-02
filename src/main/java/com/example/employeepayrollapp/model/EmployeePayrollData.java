@@ -1,10 +1,7 @@
 package com.example.employeepayrollapp.model;
 
 import com.example.employeepayrollapp.dto.EmployeePayrollDTO;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,6 +31,8 @@ public class EmployeePayrollData {
 
     private String profilePic;
 
+    @ElementCollection
+    @CollectionTable(name = "employee_department", joinColumns = @JoinColumn(name = "id"))
     private List<String> departments;
 
     public EmployeePayrollData(EmployeePayrollDTO employeePayrollDTO) {
